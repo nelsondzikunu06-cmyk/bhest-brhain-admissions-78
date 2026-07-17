@@ -2,19 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, SectionHeader } from "@/components/site/Section";
 import { FaqList } from "@/routes/index";
 
-export const Route = createFileRoute("/faq")({
-  head: () => ({
-    meta: [
-      { title: "FAQ — BHEST BRHAIN Admission Consult" },
-      { name: "description", content: "Answers to the most common questions about our admission consultancy service in Ghana." },
-      { property: "og:title", content: "Frequently Asked Questions" },
-      { property: "og:url", content: "/faq" },
-    ],
-    links: [{ rel: "canonical", href: "/faq" }],
-  }),
-  component: FaqPage,
-});
-
 const FAQS = [
   { q: "How long does the application process take?", a: "Most applications are prepared and submitted within 24–48 hours after we receive all required documents." },
   { q: "Which universities can you apply to?", a: "We handle all public, private, and technical universities in Ghana — including nursing and teacher training colleges." },
@@ -27,6 +14,37 @@ const FAQS = [
   { q: "How do I know my application was submitted?", a: "You'll receive your unique application reference immediately and confirmation from your consultant within 48 hours." },
   { q: "Is my information kept confidential?", a: "Always. Your data is used only to process your application and is never shared with third parties." },
 ];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+export const Route = createFileRoute("/faq")({
+  head: () => ({
+    meta: [
+      { title: "FAQ — BHEST BRHAIN Admission Consult" },
+      { name: "description", content: "Answers to the most common questions about our Ghana university admission consultancy — processing time, fees, documents, scholarships and more." },
+      { property: "og:title", content: "FAQ — BHEST BRHAIN Admission Consult" },
+      { property: "og:description", content: "Everything you need to know about applying to a Ghanaian university with BHEST BRHAIN." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/faq" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "FAQ — BHEST BRHAIN Admission Consult" },
+      { name: "twitter:description", content: "Common questions about Ghana university admissions." },
+    ],
+    links: [{ rel: "canonical", href: "/faq" }],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(faqJsonLd) },
+    ],
+  }),
+  component: FaqPage,
+});
 
 function FaqPage() {
   return (

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE } from "@/lib/site";
+import logo from "@/assets/logo.png";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,10 +32,8 @@ export function Navbar() {
       }`}
     >
       <div className="container-luxe flex h-16 items-center justify-between md:h-20">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary text-primary-foreground shadow-md">
-            <span className="font-display text-lg font-bold text-gold">BB</span>
-          </div>
+        <Link to="/" className="flex items-center gap-3">
+          <img src={logo} alt="BHEST BRHAIN emblem" width={44} height={44} className="h-11 w-11 rounded-full object-contain drop-shadow-sm" />
           <div className="hidden sm:block leading-tight">
             <div className={`font-display text-sm font-bold ${solid ? "text-primary" : "text-white"}`}>BHEST BRHAIN</div>
             <div className={`text-[10px] uppercase tracking-[0.18em] ${solid ? "text-muted-foreground" : "text-white/70"}`}>Admission Consult</div>
