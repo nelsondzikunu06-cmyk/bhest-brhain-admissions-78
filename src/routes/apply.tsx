@@ -28,6 +28,13 @@ type FormState = {
   fullName: string; phone: string; email: string; dob: string; gender: string; nationality: string; address: string;
   qualification: string; school: string; examYear: string; indexNumber: string; subjects: string; grades: string;
   university: string; programme: string; studyMode: string; campus: string;
+  passport: File | null;
+  resultSlip: File | null;
+  birthCertificate: File | null;
+  ghanaCard: File | null;
+  transcript: File | null;
+  otherDocument: File | null;
+  
   declaration: boolean;
 };
 
@@ -37,13 +44,21 @@ const STEPS = [
   { id: 1, title: "Personal", icon: User },
   { id: 2, title: "Academic", icon: GraduationCap },
   { id: 3, title: "University", icon: School },
-  { id: 4, title: "Review", icon: FileCheck },
+  { id: 4, title: "Documents" , icon: FileCheck },
+  { id: 5, title: "Review", icon: CheckCircle2 },
 ];
 
 const initialForm: FormState = {
   fullName: "", phone: "", email: "", dob: "", gender: "", nationality: "Ghanaian", address: "",
   qualification: "", school: "", examYear: "", indexNumber: "", subjects: "", grades: "",
   university: "", programme: "", studyMode: "", campus: "",
+  passport: null,
+  resultSlit: null,
+  birthCertificate: null,
+  ghanaCard: null,
+  transcript: null,
+  otherDocument: null,
+  
   declaration: false,
 };
 
@@ -100,7 +115,7 @@ function ApplyPage() {
     if (Object.keys(e).length === 0) {
       setTouched(false);
       setErrors({});
-      setStep((s) => Math.min(4, s + 1));
+      setStep((s) => Math.min(5, s + 1));
     }
   };
 
@@ -209,7 +224,7 @@ function ApplyPage() {
               })}
             </div>
             <div className="mt-4 h-1 rounded-full bg-secondary overflow-hidden">
-              <motion.div initial={false} animate={{ width: `${(step / 4) * 100}%` }} className="h-full bg-gold" />
+              <motion.div initial={false} animate={{ width: `${(step / 5) * 100}%` }} className="h-full bg-gold" />
             </div>
           </div>
 
@@ -252,6 +267,91 @@ function ApplyPage() {
                   </div>
                 )}
                 {step === 4 && (
+  <div className="space-y-6">
+
+    <div>
+      <h3 className="font-display text-lg font-semibold text-primary">
+        Upload Required Documents
+      </h3>
+
+      <p className="text-sm text-muted-foreground">
+        Upload clear copies of the required documents below.
+      </p>
+    </div>
+
+    <div className="grid gap-6 sm:grid-cols-2">
+
+      <Field label="Passport Photo">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            set("passport", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="WASSCE / Result Slip">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("resultSlip", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Birth Certificate">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("birthCertificate", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Ghana Card">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("ghanaCard", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Transcript (Optional)">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("transcript", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Other Supporting Document">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("otherDocument", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+    </div>
+
+  </div>
+)}
+                {step === 5 && (
                   <div className="space-y-6">
                     <div>
                       <h3 className="font-display text-lg font-semibold text-primary">Review your information</h3>
@@ -288,7 +388,7 @@ function ApplyPage() {
               >
                 <ArrowLeft className="h-4 w-4" /> Back
               </button>
-              {step < 4 ? (
+              {step < 5 ? (
                 <button
                   type="button"
                   onClick={next}
