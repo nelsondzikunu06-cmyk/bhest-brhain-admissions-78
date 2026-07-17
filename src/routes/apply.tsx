@@ -88,8 +88,24 @@ function validateStep(step: number, form: FormState): Errors {
     if (!form.studyMode) e.studyMode = "Select a study mode";
   }
   if (step === 4) {
-    if (!form.declaration) e.declaration = "You must accept the declaration";
-  }
+    if (step === 4) {
+  if (!form.passport)
+    e.passport = "Passport photo is required";
+
+  if (!form.resultSlip)
+    e.resultSlip = "Result slip is required";
+
+  if (!form.birthCertificate)
+    e.birthCertificate = "Birth certificate is required";
+
+  if (!form.ghanaCard)
+    e.ghanaCard = "Ghana Card is required";
+}
+
+if (step === 5) {
+  if (!form.declaration)
+    e.declaration = "You must accept the declaration";
+}
   return e;
 }
 
@@ -281,7 +297,9 @@ function ApplyPage() {
 
     <div className="grid gap-6 sm:grid-cols-2">
 
-      <Field label="Passport Photo">
+      <Field label="Passport Photo"
+        error={displayErrors.passport}
+        >
         <input
           type="file"
           accept="image/*"
@@ -292,7 +310,9 @@ function ApplyPage() {
         />
       </Field>
 
-      <Field label="WASSCE / Result Slip">
+      <Field label="WASSCE / Result Slip"
+        error={displayErrors.resultSlip}
+        >
         <input
           type="file"
           accept=".pdf,image/*"
@@ -303,7 +323,9 @@ function ApplyPage() {
         />
       </Field>
 
-      <Field label="Birth Certificate">
+      <Field label="Birth Certificate"
+        error={displayErrors.birthCertificate}
+        >
         <input
           type="file"
           accept=".pdf,image/*"
@@ -314,7 +336,9 @@ function ApplyPage() {
         />
       </Field>
 
-      <Field label="Ghana Card">
+      <Field label="Ghana Card"
+        error={displayErrors.ghanaCard}
+        >
         <input
           type="file"
           accept=".pdf,image/*"
