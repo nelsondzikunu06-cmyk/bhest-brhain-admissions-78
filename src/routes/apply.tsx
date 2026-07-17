@@ -28,6 +28,13 @@ type FormState = {
   fullName: string; phone: string; email: string; dob: string; gender: string; nationality: string; address: string;
   qualification: string; school: string; examYear: string; indexNumber: string; subjects: string; grades: string;
   university: string; programme: string; studyMode: string; campus: string;
+  passport: File | null;
+  resultSlip: File | null;
+  birthCertificate: File | null;
+  ghanaCard: File | null;
+  transcript: File | null;
+  otherDocument: File | null;
+  
   declaration: boolean;
 };
 
@@ -37,7 +44,8 @@ const STEPS = [
   { id: 1, title: "Personal", icon: User },
   { id: 2, title: "Academic", icon: GraduationCap },
   { id: 3, title: "University", icon: School },
-  { id: 4, title: "Review", icon: FileCheck },
+
+  { id: 5, title: "Review", icon: CheckCircle2 },
 ];
 
 const initialForm: FormState = {
