@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { PageHero } from "@/components/site/Section";
 import { SITE, UNIVERSITIES } from "@/lib/site";
 import logo from "@/assets/logo.png";
+import {supabase} from "@/lib/supabase";
 
 export const Route = createFileRoute("/apply")({
   head: () => ({
@@ -45,6 +46,7 @@ const STEPS = [
   { id: 2, title: "Academic", icon: GraduationCap },
   { id: 3, title: "University", icon: School },
 
+  { id: 4, title: "Documents" , icon: FileCheck },
   { id: 5, title: "Review", icon: CheckCircle2 },
 ];
 
@@ -52,6 +54,13 @@ const initialForm: FormState = {
   fullName: "", phone: "", email: "", dob: "", gender: "", nationality: "Ghanaian", address: "",
   qualification: "", school: "", examYear: "", indexNumber: "", subjects: "", grades: "",
   university: "", programme: "", studyMode: "", campus: "",
+  passport: null,
+  resultSlip: null,
+  birthCertificate: null,
+  ghanaCard: null,
+  transcript: null,
+  otherDocument: null,
+  
   declaration: false,
 };
 
@@ -81,8 +90,24 @@ function validateStep(step: number, form: FormState): Errors {
     if (!form.studyMode) e.studyMode = "Select a study mode";
   }
   if (step === 4) {
-    if (!form.declaration) e.declaration = "You must accept the declaration";
-  }
+    
+  if (!form.passport)
+    e.passport = "Passport photo is required";
+
+  if (!form.resultSlip)
+    e.resultSlip = "Result slip is required";
+
+  if (!form.birthCertificate)
+    e.birthCertificate = "Birth certificate is required";
+
+  if (!form.ghanaCard)
+    e.ghanaCard = "Ghana Card is required";
+}
+
+if (step === 5) {
+  if (!form.declaration)
+    e.declaration = "You must accept the declaration";
+}
   return e;
 }
 
@@ -108,7 +133,7 @@ function ApplyPage() {
     if (Object.keys(e).length === 0) {
       setTouched(false);
       setErrors({});
-      setStep((s) => Math.min(4, s + 1));
+      setStep((s) => Math.min(5, s + 1));
     }
   };
 
@@ -217,7 +242,7 @@ function ApplyPage() {
               })}
             </div>
             <div className="mt-4 h-1 rounded-full bg-secondary overflow-hidden">
-              <motion.div initial={false} animate={{ width: `${(step / 4) * 100}%` }} className="h-full bg-gold" />
+              <motion.div initial={false} animate={{ width: `${(step / 5) * 100}%` }} className="h-full bg-gold" />
             </div>
           </div>
 
@@ -260,6 +285,99 @@ function ApplyPage() {
                   </div>
                 )}
                 {step === 4 && (
+  <div className="space-y-6">
+
+    <div>
+      <h3 className="font-display text-lg font-semibold text-primary">
+        Upload Required Documents
+      </h3>
+
+      <p className="text-sm text-muted-foreground">
+        Upload clear copies of the required documents below.
+      </p>
+    </div>
+
+    <div className="grid gap-6 sm:grid-cols-2">
+
+      <Field label="Passport Photo"
+        error={displayErrors.passport}
+        >
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            set("passport", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="WASSCE / Result Slip"
+        error={displayErrors.resultSlip}
+        >
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("resultSlip", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Birth Certificate"
+        error={displayErrors.birthCertificate}
+        >
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("birthCertificate", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Ghana Card"
+        error={displayErrors.ghanaCard}
+        >
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("ghanaCard", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Transcript (Optional)">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("transcript", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+      <Field label="Other Supporting Document">
+        <input
+          type="file"
+          accept=".pdf,image/*"
+          onChange={(e) =>
+            set("otherDocument", e.target.files?.[0] ?? null)
+          }
+          className="w-full rounded-xl border p-3"
+        />
+      </Field>
+
+    </div>
+
+  </div>
+)}
+                {step === 5 && (
                   <div className="space-y-6">
                     <div>
                       <h3 className="font-display text-lg font-semibold text-primary">Review your information</h3>
@@ -296,7 +414,7 @@ function ApplyPage() {
               >
                 <ArrowLeft className="h-4 w-4" /> Back
               </button>
-              {step < 4 ? (
+              {step < 5 ? (
                 <button
                   type="button"
                   onClick={next}
