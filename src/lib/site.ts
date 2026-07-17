@@ -19,7 +19,9 @@ export const NAV_LINKS = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export const UNIVERSITIES = [
+export type University = { name: string; short?: string; city: string; type: "Public" | "Private" | "Technical" };
+
+export const UNIVERSITIES: University[] = [
   { name: "University of Ghana", city: "Legon, Accra", type: "Public" },
   { name: "Kwame Nkrumah University of Science and Technology", short: "KNUST", city: "Kumasi", type: "Public" },
   { name: "University of Cape Coast", city: "Cape Coast", type: "Public" },
@@ -33,6 +35,4 @@ export const UNIVERSITIES = [
   { name: "Methodist University", city: "Accra", type: "Private" },
   { name: "Valley View University", city: "Oyibi", type: "Private" },
   { name: "Presbyterian University", city: "Abetifi", type: "Private" },
-] as const;
-
-export type University = (typeof UNIVERSITIES)[number];
+];
