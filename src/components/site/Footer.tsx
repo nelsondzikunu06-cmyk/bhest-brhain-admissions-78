@@ -1,16 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { NAV_LINKS, SITE } from "@/lib/site";
+import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
     <footer className="bg-navy-grid text-white/85 mt-24">
       <div className="container-luxe py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <div className="flex items-center gap-2.5">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 border border-white/10">
-              <span className="font-display text-lg font-bold text-gold">BB</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="BHEST BRHAIN emblem" width={48} height={48} loading="lazy" className="h-12 w-12 rounded-full object-contain" />
             <div className="leading-tight">
               <div className="font-display text-sm font-bold text-white">BHEST BRHAIN</div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-white/60">Admission Consult</div>
