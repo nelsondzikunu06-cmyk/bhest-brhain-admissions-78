@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { GraduationCap, MapPin, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PageHero } from "@/components/site/Section";
+import { UniLogo } from "@/components/site/UniLogo";
 import { UNIVERSITIES } from "@/lib/site";
 
 export const Route = createFileRoute("/universities")({

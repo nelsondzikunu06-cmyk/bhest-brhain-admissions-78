@@ -14,26 +14,33 @@ export const NAV_LINKS = [
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
   { to: "/universities", label: "Universities" },
+  { to: "/eligibility", label: "Eligibility" },
   { to: "/apply", label: "Apply" },
+  { to: "/reviews", label: "Reviews" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export type University = { name: string; short?: string; city: string; type: "Public" | "Private" | "Technical"; logo?: string; };
+export type University = { name: string; short?: string; city: string; type: "Public" | "Private" | "Technical"; cutoff?: number };
 
+// cutoff = minimum WASSCE aggregate accepted for general programs (lower = more competitive)
 export const UNIVERSITIES: University[] = [
-  { name: "University of Ghana", city: "Legon, Accra", type: "Public" , logo: "https://www.ug.edu.gh/sites/default/files/ug_standard_new_sl_1.png" },
-  { name: "Kwame Nkrumah University of Science and Technology", short: "KNUST", city: "Kumasi", type: "Public" , logo: "https://www.knust.edu.gh/themes/custom/adepts/images/knustlogo.png" },
-  { name: "University of Cape Coast", city: "Cape Coast", type: "Public" , logo: "https://www.ucc.edu.gh/sites/default/files/ucc_logo_new.png" },
-  { name: "Accra Technical University", city: "Accra", type: "Technical" , logo: "https:/sites.myatu.net/wp-content/uploads/2020/05/unnamed-1-300*113.png" },
-  { name: "University of Professional Studies", short: "UPSA", city: "Accra", type: "Public" , logo: "https://upsa.edu.gh/wp-content/uploads/2020/11/upsa-logoacbsp.png" },
-  { name: "Ghana Institute of Management and Public Administration", short: "GIMPA", city: "Accra", type: "Public", logo: "https://www.gimpa.edu.gh/wp-content/themes/GIMPS/images/logo_g.png" },
-  { name: "Central University", city: "Accra", type: "Private", logo: "https://www.central.edu.gh/virgin/images/Central-Uni-logo.png" },
-  { name: "Wisconsin International University", city: "Accra", type: "Private" , logo: "https://i0.wp.com/wiuc-ghana.edu.gh/wp-content/uploads/2019/08/Asset-1@1.5x.png" },
-  { name: "Regent University", city: "Accra", type: "Private" , logo: "https://upload.wikipedia.org/wikipedia/en/2/2c/RUCST_logo.jpg" },
-  { name: "Ashesi University", city: "Berekuso", type: "Private", logo: "https://www.ashesi.edu.gh/images/logo-mobile_colored.png" },
-  { name: "Methodist University", city: "Accra", type: "Private" , logo: "https://mucg.edu.gh/wp-content/uploads/2021/12/logolastmid.png" },
-  { name: "Valley View University", city: "Oyibi", type: "Private" , logo: "https://vvu.edu.gh/images/main-pages/vvu-logo-official.jpg" },
-  { name: "Presbyterian University", city: "Abetifi", type: "Private", logo: "https://i0.wp.com/www.presbyuniversity.edu.gh/site/wp-content/uploads/2021/11/University-Logo-New-02.png" },
-  { name: "Catholic Institute of Business and Technology", city: "Accra", type: "Private", logo: "https://cibt.edu.gh/wp-content/uploads/2021/10/logo.png" },
+  { name: "University of Ghana", short: "UG", city: "Legon, Accra", type: "Public", cutoff: 12 },
+  { name: "Kwame Nkrumah University of Science and Technology", short: "KNUST", city: "Kumasi", type: "Public", cutoff: 14 },
+  { name: "University of Cape Coast", short: "UCC", city: "Cape Coast", type: "Public", cutoff: 18 },
+  { name: "Accra Technical University", short: "ATU", city: "Accra", type: "Technical", cutoff: 30 },
+  { name: "University of Professional Studies", short: "UPSA", city: "Accra", type: "Public", cutoff: 20 },
+  { name: "Ghana Institute of Management and Public Administration", short: "GIMPA", city: "Accra", type: "Public", cutoff: 24 },
+  { name: "Central University", short: "CU", city: "Accra", type: "Private", cutoff: 30 },
+  { name: "Wisconsin International University", short: "WIUC", city: "Accra", type: "Private", cutoff: 30 },
+  { name: "Regent University", short: "RUCST", city: "Accra", type: "Private", cutoff: 30 },
+  { name: "Ashesi University", short: "ASHESI", city: "Berekuso", type: "Private", cutoff: 15 },
+  { name: "Methodist University", short: "MUCG", city: "Accra", type: "Private", cutoff: 30 },
+  { name: "Valley View University", short: "VVU", city: "Oyibi", type: "Private", cutoff: 30 },
+  { name: "Presbyterian University", short: "PUC", city: "Abetifi", type: "Private", cutoff: 30 },
+  { name: "Catholic Institute of Business and Technology", short: "CIBT", city: "Accra", type: "Private", cutoff: 30 },
 ];
+
+export function getInitials(u: University) {
+  return (u.short ?? u.name.split(" ").filter(Boolean).slice(0, 3).map(w => w[0]).join("")).toUpperCase().slice(0, 4);
+}
