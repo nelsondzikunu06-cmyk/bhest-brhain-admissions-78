@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { GraduationCap, MapPin, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PageHero } from "@/components/site/Section";
+import { UniLogo } from "@/components/site/UniLogo";
 import { UNIVERSITIES } from "@/lib/site";
 
 export const Route = createFileRoute("/universities")({
@@ -96,17 +97,8 @@ function UniversitiesPage() {
                     {u.short && <div className="mt-0.5 text-xs text-muted-foreground">{u.name}</div>}
                     <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" /> {u.city}</div>
                   </div>
-                <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-xl border bg-white p-2">
-  {u.logo ? (
-    <img
-      src={u.logo}
-      alt={u.name}
-      className="h-full w-full object-contain"
-    />
-  ) : (
-    <GraduationCap className="h-5 w-5 text-primary" />
-  )}
-</div>
+                  <UniLogo u={u} size={56} />
+
                 </div>
               </motion.article>
             ))}
